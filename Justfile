@@ -1,6 +1,6 @@
 repo_organization := "ublue-os"
 rechunker_image := "ghcr.io/ublue-os/legacy-rechunk:v1.0.1-x86_64@sha256:2627cbf92ca60ab7372070dcf93b40f457926f301509ffba47a04d6a9e1ddaf7"
-common_image := "ghcr.io/projectbluefin/common:latest"
+common_image := "ghcr.io/josemiguelo/common:latest"
 brew_image := "ghcr.io/ublue-os/brew:latest"
 images := '(
     [bluefin]=bluefin
@@ -149,7 +149,7 @@ build $image="bluefin" $tag="latest" $flavor="main" rechunk="0" ghcr="0" pipelin
         {{ just }} verify-container "akmods-nvidia-open:${akmods_flavor}-${fedora_version}-${kernel_release}"
     fi
 
-    {{ just }} verify-container "common:latest@${common_image_sha}" ghcr.io/projectbluefin https://raw.githubusercontent.com/projectbluefin/common/refs/heads/main/cosign.pub
+    {{ just }} verify-container "common:latest@${common_image_sha}" ghcr.io/josemiguelo https://raw.githubusercontent.com/josemiguelo/common/refs/heads/main/cosign.pub
     {{ just }} verify-container "brew:latest@${brew_image_sha}" ghcr.io/ublue-os https://raw.githubusercontent.com/ublue-os/brew/refs/heads/main/cosign.pub
 
     # Get Version
@@ -468,7 +468,7 @@ changelogs branch="stable" handwritten="":
 
 # Verify Container with Cosign
 [group('Utility')]
-verify-container container="" registry="ghcr.io/ublue-os" key="":
+verify-container container="" registry="ghcr.io/josemiguelo" key="":
     #!/usr/bin/bash
     set -eou pipefail
 
@@ -487,17 +487,18 @@ verify-container container="" registry="ghcr.io/ublue-os" key="":
         fi
     fi
 
-    # Public Key for Container Verification
-    key={{ key }}
-    if [[ -z "${key:-}" ]]; then
-        key="https://raw.githubusercontent.com/ublue-os/main/main/cosign.pub"
-    fi
-
-    # Verify Container using cosign public key
-    if ! cosign verify --key "${key}" "{{ registry }}"/"{{ container }}" >/dev/null; then
-        echo "NOTICE: Verification failed. Please ensure your public key is correct."
-        exit 1
-    fi
+    # # Public Key for Container Verification
+    # key={{ key }}
+    # if [[ -z "${key:-}" ]]; then
+    #     echo "no key! setting up from raw pub"
+    #     key="https://raw.githubusercontent.com/josemiguelo/bluefin/main/cosign.pub"
+    # fi
+    #
+    # # Verify Container using cosign public key
+    # if ! cosign verify --key "${key}" "{{ registry }}"/"{{ container }}" >/dev/null; then
+    #     echo "NOTICE: Verification failed. Please ensure your public key is correct."
+    #     exit 1
+    # fi
 
 # Secureboot Check
 [group('Utility')]

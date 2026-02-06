@@ -18,8 +18,6 @@ source /ctx/build_files/shared/copr-helpers.sh
 # Base packages from Fedora repos - common to all versions
 FEDORA_PACKAGES=(
     adcli
-    adw-gtk3-theme
-    adwaita-fonts-all
     bash-color-prompt
     bcache-tools
     bootc
@@ -37,7 +35,6 @@ FEDORA_PACKAGES=(
     gcc
     git-credential-libsecret
     glow
-    gnome-tweaks
     gum
     hplip
     ibus-mozc
@@ -96,13 +93,11 @@ FEDORA_PACKAGES=(
 case "$FEDORA_MAJOR_VERSION" in
     42)
         FEDORA_PACKAGES+=(
-            evolution-ews-core
             uld
         )
         ;;
     43)
         FEDORA_PACKAGES+=(
-            evolution-ews-core
             gnupg2-scdaemon
         )
         ;;
@@ -116,23 +111,8 @@ dnf config-manager addrepo --from-repofile=https://pkgs.tailscale.com/stable/fed
 dnf config-manager setopt tailscale-stable.enabled=0
 dnf -y install --enablerepo='tailscale-stable' tailscale
 
-# From che/nerd-fonts
-copr_install_isolated "che/nerd-fonts" "nerd-fonts"
-
 # From ublue-os/packages
 copr_install_isolated "ublue-os/packages" "uupd"
-
-# Version-specific COPR packages
-# case "$FEDORA_MAJOR_VERSION" in
-#    42)
-        # bazaar and uupd from ublue-os/packages
-        # copr_install_isolated "ublue-os/packages" "bazaar" "uupd"
-        # ;;
-    # 43)
-        # bazaar from ublue-os/packages
-        # copr_install_isolated "ublue-os/packages" "bazaar"
-        # ;;
-# esac
 
 # Packages to exclude - common to all versions
 EXCLUDED_PACKAGES=(

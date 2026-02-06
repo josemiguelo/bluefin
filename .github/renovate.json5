@@ -43,7 +43,7 @@
       "matchUpdateTypes": ["digest"],
       "matchDepNames": [
         "ghcr.io/ublue-os/silverblue-main",
-        "ghcr.io/projectbluefin/common"
+        "ghcr.io/josemiguelo/common"
       ]
     }
   ]

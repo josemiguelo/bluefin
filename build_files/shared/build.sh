@@ -33,9 +33,6 @@ echo "::endgroup::"
 # Install Overrides and Fetch Install
 /ctx/build_files/base/05-override-install.sh
 
-# Build GNOME Extensions from Git Submodules
-/ctx/build_files/shared/build-gnome-extensions.sh
-
 # Get Firmare for Framework
 /ctx/build_files/base/08-firmware.sh
 
@@ -43,9 +40,6 @@ echo "::endgroup::"
 
 # Systemd and Remove Items
 /ctx/build_files/base/17-cleanup.sh
-
-# Run workarounds for lf (Likely not needed)
-/ctx/build_files/base/18-workarounds.sh
 
 # Regenerate initramfs
 /ctx/build_files/base/19-initramfs.sh
